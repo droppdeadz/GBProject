@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StackNavigator, } from 'react-navigation';
-import styles from './css';
 import LocalizedStrings from 'react-native-localization';
+import styles from './css';
 import {
     Alert,
     StyleSheet,
@@ -135,12 +135,12 @@ class playing extends Component {
         super();
         this.state = {
             score: [0, 0, 0, 0],
+            score1: 0,
+            score2: 0,
+            score3: 0,
+            score4: 0,
             playing: true,
             bin: [true, false, false, false],
-            general: 0,
-            compostable: 0,
-            recycle: 0,
-            hazardous: 0,
             imgShow: 0,
             binImg: [require('./img/bin.png')
                 , require('./img/bin2.png')
@@ -221,25 +221,25 @@ class playing extends Component {
         AsyncStorage.getItem(STORAGE_KEY1)
             .then((value) => {
                 this.setState({
-                    score1: value,
+                    score1: (value == null) ? 0 : parseInt(value, 10),
                 })
             }).catch((error) => console.log('AsyncStorage:' + error.message))
         AsyncStorage.getItem(STORAGE_KEY2)
             .then((value) => {
                 this.setState({
-                    score2: value,
+                    score2: (value == null) ? 0 : parseInt(value, 10),
                 })
             }).catch((error) => console.log('AsyncStorage:' + error.message))
         AsyncStorage.getItem(STORAGE_KEY3)
             .then((value) => {
                 this.setState({
-                    score3: value,
+                    score3: (value == null) ? 0 : parseInt(value, 10),
                 })
             }).catch((error) => console.log('AsyncStorage:' + error.message))
         AsyncStorage.getItem(STORAGE_KEY4)
             .then((value) => {
                 this.setState({
-                    score4: value,
+                    score4: (value == null) ? 0 : parseInt(value, 10),
                 })
             }).catch((error) => console.log('AsyncStorage:' + error.message))
     }
@@ -248,6 +248,7 @@ class playing extends Component {
         var x2 = parseInt(this.state.score[1], 10) + parseInt(this.state.score2, 10);
         var x3 = parseInt(this.state.score[2], 10) + parseInt(this.state.score3, 10);
         var x4 = parseInt(this.state.score[3], 10) + parseInt(this.state.score4, 10);
+        
         AsyncStorage.setItem(STORAGE_KEY1, x1 + "")
             .then(() => console.log('saved ' + this.state.score[0]))
             .catch((error) => console.log(error.message)).done();
@@ -568,34 +569,40 @@ class statistic extends Component {
         super();
         this._stat();
         this.state = {
+            teamId: 6,
+            secretKey: 'e7P5wa',
+            score1: 0,
+            score2: 0,
+            score3: 0,
+            score4: 0
         }
     }
     componentDidMount() {
         AsyncStorage.getItem(STORAGE_KEY1)
             .then((value) => {
                 this.setState({
-                    score1: value,
+                    score1: (value == null) ? 0 : parseInt(value, 10),
                 })
                 console.log('show' + value)
             }).catch((error) => console.log('AsyncStorage:' + error.message))
         AsyncStorage.getItem(STORAGE_KEY2)
             .then((value) => {
                 this.setState({
-                    score2: value,
+                    score2: (value == null) ? 0 : parseInt(value, 10),
                 })
                 console.log('show' + value)
             }).catch((error) => console.log('AsyncStorage:' + error.message))
         AsyncStorage.getItem(STORAGE_KEY3)
             .then((value) => {
                 this.setState({
-                    score3: value,
+                    score3: (value == null) ? 0 : parseInt(value, 10),
                 })
                 console.log('show' + value)
             }).catch((error) => console.log('AsyncStorage:' + error.message))
         AsyncStorage.getItem(STORAGE_KEY4)
             .then((value) => {
                 this.setState({
-                    score4: value,
+                    score4: (value == null) ? 0 : parseInt(value, 10),
                 })
                 console.log('show' + value)
             }).catch((error) => console.log('AsyncStorage:' + error.message))
